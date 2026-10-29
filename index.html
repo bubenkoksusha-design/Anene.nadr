@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Опрос про журнал</title>
+    <style>
+        /* Пастельно-розовый градиент на весь экран */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            touch-action: none;
+            background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 50%, #ffd1dc 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Заголовок темно-розового цвета */
+        h1 {
+            color: #b35972;
+            font-size: 26px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 0 20px;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+            letter-spacing: -0.3px;
+        }
+
+        /* Контейнер, который держит кнопки вместе на старте */
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            height: 60px;
+        }
+
+        /* Общий стиль для обеих кнопок */
+        button {
+            padding: 15px 38px;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            transition: transform 0.1s ease, box-shadow 0.2s ease;
+        }
+
+        /* Яркая и красивая кнопка "Да" */
+        #yesBtn {
+            background: linear-gradient(135deg, #ff8da1 0%, #ff6b8b 100%);
+            color: white;
+            box-shadow: 0 6px 15px rgba(255, 107, 139, 0.3);
+        }
+
+        #yesBtn:active {
+            transform: scale(0.95);
+        }
+
+        /* Нейтральная кнопка "Нет", которая изначально стоит рядом */
+        #noBtn {
+            background: linear-gradient(135deg, #e0e0e6 0%, #dcdcdc 100%);
+            color: #757575;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Тебе понравился этот журнал?</h1>
+
+    <div class="buttons-container">
+        <button id="yesBtn" onclick="alert('Ураа! Я очень рада! 🥰')">Да</button>
+        <button id="noBtn">Нет</button>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+
+        function teleportButton(e) {
+            if (e) e.preventDefault();
+
+            // Включаем свободное перемещение по всему экрану при первом же касании
+            noBtn.style.position = 'fixed';
+
+            // Безопасные отступы от краев дисплея
+            const padding = 30;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+            // Генерируем случайную точку на экране
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+
+            // Мгновенно перемещаем кнопку туда
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        // Запуск функции при касании на смартфонах
+        noBtn.addEventListener('touchstart', teleportButton, { passive: false });
+        
+        // Запуск при наведении мышки на ПК
+        noBtn.addEventListener('mouseover', teleportButton);
+        
+        // Защита от кликов
+        noBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            teleportButton();
+        });
+    </script>
+
+</body>
+</html>
